@@ -4,7 +4,8 @@ LABEL maintainer="titangene.tw@gmail.com"
 # Install the PHP extensions we need
 RUN set -ex; \
 	apt-get update; \
-	docker-php-ext-install -j$(nproc) pdo_mysql; \
+        apt-get install php7.4-pgsql -y; \
+        docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_pgsql; \
 	rm -rf /var/lib/apt/lists/*
 
 RUN a2enmod rewrite

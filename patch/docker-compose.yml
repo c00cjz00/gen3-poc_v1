@@ -92,12 +92,17 @@ services:
     container_name: fence-service
     networks:
       - devnet
+    ports:
+      - 80:9180
+      - 9117:9117       
     volumes:
       - ./Secrets/fence-config.yaml:/var/www/fence/fence-config.yaml
       - ./Secrets/user.yaml:/var/www/fence/user.yaml
       - ./Secrets/TLS/service.crt:/usr/local/share/ca-certificates/cdis-ca.crt
       - ./Secrets/fenceJwtKeys:/fence/keys
       - ./scripts/fence_setup.sh:/var/www/fence/fence_setup.sh
+      - ./deployment/etc_uwsgi.ini:/etc/uwsgi/uwsgi.ini      
+      - ./deployment/fence_uwsgi.ini:/fence/deployment/uwsgi/uwsgi.ini          
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost/_status"]
       interval: 60s
@@ -109,6 +114,14 @@ services:
     depends_on:
       - postgres
       - arborist-service
+  uwsgi-exporter:
+    image: timonwong/uwsgi-exporter:v1.0.0
+    container_name: uwsgi-exporter
+    networks:
+      - devnet    
+    command: [ '--stats.uri', 'http://127.0.0.1/uwsgi_status' ]
+    depends_on:
+      - fence
   arborist-service:
     image: "quay.io/cdis/arborist:2021.03"
     container_name: arborist-service

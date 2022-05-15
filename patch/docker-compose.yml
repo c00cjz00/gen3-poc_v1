@@ -93,7 +93,7 @@ services:
     networks:
       - devnet
     ports:
-      - 80:9180
+      - 9180:80
       - 9117:9117       
     volumes:
       - ./Secrets/fence-config.yaml:/var/www/fence/fence-config.yaml

@@ -121,7 +121,7 @@ services:
       - devnet    
     command: [ '--stats.uri', 'http://127.0.0.1/uwsgi_status' ]
     depends_on:
-      - fence
+      - fence-service
   arborist-service:
     image: "quay.io/cdis/arborist:2022.05"
     container_name: arborist-service

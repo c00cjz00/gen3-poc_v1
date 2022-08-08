@@ -83,6 +83,11 @@ services:
       - ./Secrets/indexd_creds.json:/var/www/indexd/creds.json
       - ./Secrets/config_helper.py:/var/www/indexd/config_helper.py
       - ./scripts/indexd_setup.sh:/var/www/indexd/indexd_setup.sh
+      - ./deployment/indexd_uwsgi.ini:/etc/uwsgi/uwsgi.ini
+      - ./deployment/indexd_uwsgi.ini:/indexd/deployment/uwsgi/uwsgi.ini
+      - ./deployment/etc_uwsgi.conf:/etc/nginx/sites-available/uwsgi.conf      
+    sysctls:
+      net.core.somaxconn: 8192      
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost/_status"]
       interval: 60s
@@ -390,4 +395,3 @@ networks:
 volumes:
   psqldata:
   esdata:
- 

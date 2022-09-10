@@ -4,7 +4,7 @@
     "appName": "生醫服務入口平台",
     "index": {
       "introduction": {
-        "heading": "生醫服務入口平台",
+        "heading": "2生醫服務入口平台",
         "text": "LIONS Data Framework. 整合生醫領域資料，串接各類生醫研究常用資料庫的API，提供單一入口平臺，讓研究人員可以同時查詢多種資料庫.",
         "link": "/submission"
       },
@@ -115,8 +115,45 @@
         "alt": "Center for Translational Data Science at the University of Chicago"
       }
     ]
+  },    
+  "graphql": {
+    "boardCounts": [
+      {
+        "graphql": "_project_count",
+        "name": "Project",
+        "plural": "Projects"
+      },      {
+        "graphql": "_case_count",
+        "name": "Case",
+        "plural": "Cases"
+      },
+      {
+        "graphql": "_sample_count",
+        "name": "Sample",
+        "plural": "Samples"
+      },
+      {
+        "graphql": "_slide_count",
+        "name": "Slide",
+        "plural": "Slides"
+      }
+    ],
+    "chartCounts": [
+      {
+        "graphql": "_project_count",
+        "name": "Project"
+      },
+      {
+        "graphql": "_case_count",
+        "name": "Case"
+      },	  
+      {
+        "graphql": "_slide_count",
+        "name": "Slides"
+      }
+    ],
+    "projectDetails": "boardCounts"
   },  
-  
   "dataExplorerConfig": {
     "charts": {
       "project_id": {
@@ -132,39 +169,45 @@
         "title": "Cases"
       },
       "gender": {
-        "chartType": "pie",
+        "chartType": "bar",
         "title": "Gender"
       },
       "race": {
         "chartType": "bar",
         "title": "Race"
-      }
+      },
+      "disease_type": {
+        "chartType": "bar",
+        "title": "Disease type"
+      },
+      "primary_site": {
+        "chartType": "bar",
+        "title": "Primary site"
+      }	  
     },
     "filters": {
-      "tabs": [
-		{
-            "title": "Projects",
-            "fields": [
-              "project_id",
-            "gender"
-            ]
-          }, 	  
+      "tabs": [	  
         {
           "title": "Case",
           "fields":[
             "project_id",
             "gender",
             "race",
-            "ethnicity"
-          ]
+            "ethnicity",
+			"year_of_birth",
+			"year_of_death",
+			"disease_type",
+			"primary_site",
+			"data_type",
+            "data_format"
+          ]		  
         },
 		{
           "title": "File",
           "fields": [
-            "project_id",
             "data_type",
             "data_format"
-          ]
+          ]	
         }		
       ]
     },
@@ -172,9 +215,14 @@
       "enabled": true,
       "fields": [
         "project_id",
-        "file_name",
-        "file_size",
-        "object_id"
+		"_case_id",
+        "gender",
+        "race",
+		"ethnicity",
+        "year_of_birth",
+        "year_of_death",
+		"disease_type",
+		"primary_site"
       ]
     },
     "dropdowns": {
@@ -228,10 +276,6 @@
   },
   "fileExplorerConfig": {
     "charts": {
-      "data_type": {
-        "chartType": "stackedBar",
-        "title": "File Type"
-      },
       "data_format": {
         "chartType": "stackedBar",
         "title": "File Format"
@@ -245,37 +289,27 @@
             "project_id",
             "data_type",
             "data_format"
-          ]
+          ],
+          "searchFields": [
+            "file_name"
+          ]		  
         }
       ]
     },
     "table": {
       "enabled": true,
       "fields": [
+		"state",
         "project_id",
+        "object_id",
         "file_name",
         "file_size",
-        "object_id"
+		"data_type",
+		"data_format",
+		"md5sum"
       ]
     },
-     "buttons": [{
-          "enabled": true,
-          "type": "file-manifest",
-          "title": "Download Manifest",
-          "leftIcon": "datafile",
-          "rightIcon": "download",
-          "fileName": "file-manifest.json",
-          "dropdownId": "download"
-        },
-        {
-          "enabled": true,
-          "type": "export-files-to-workspace",
-          "title": "Export to Workspace",
-          "leftIcon": "datafile",
-          "rightIcon": "download"
-        }
-      ],
-      "dropdowns": {},	
+    "dropdowns": {},
     "guppyConfig": {
       "dataType": "file",
       "fieldMapping": [
